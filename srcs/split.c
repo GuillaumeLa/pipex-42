@@ -119,3 +119,55 @@ char	**ft_split(char const *s, char c)
 	ft_parse_words(new, s, c);
 	return (new);
 }
+char	*ft_strnstr(const char *str, const char *to_find, size_t n)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	if (!str && n == 0)
+		return (0);
+	if (!to_find[0])
+		return ((char *)str);
+	while (str[i] && i != n)
+	{
+		j = 0;
+		while (str[i + j] == to_find[j] && (i + j) != n)
+		{
+			j++;
+			if (!to_find[j])
+				return ((char *)str + i);
+		}
+		i++;
+	}
+	return (0);
+}
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	int		size_new;
+	int		i;
+	int		j;
+	char	*result;
+
+	if (!s1 || !s2)
+		return (0);
+	i = 0;
+	j = 0;
+	size_new = ft_strlen((char *)s1) + ft_strlen((char *)s2);
+	result = (char *) malloc((size_new +1) * sizeof(char));
+	if (result == NULL)
+		return (0);
+	while (s1[i])
+	{
+		result[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		result[i + j] = s2[j];
+		j++;
+	}
+	result[i + j] = 0;
+	return (result);
+}
+

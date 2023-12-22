@@ -6,18 +6,48 @@
 /*   By: glabaden <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 07:31:07 by glabaden          #+#    #+#             */
-/*   Updated: 2023/12/20 07:31:10 by glabaden         ###   ########.fr       */
+/*   Updated: 2023/12/22 07:46:59 by glabaden         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+
+char *ft_get_pathname(char **env,char *cmd)
+{
+	int	i;
+	int	j;
+	char	**split_path;
+	char	*path_cmd;
+	
+	i = 0;
+	j = 0;
+	while(env[i])
+	{
+		if(ft_strnstr(env[i],"PATH=",5))
+		{
+			break;
+		}
+		i++;
+	}
+	split_path = ft_split(env[i],':');
+	i = 0;
+	while(split_path[i])
+	{
+		path_cmd = ft_strjoin(split_path[i],"/");
+		path_cmd = ft_strjoin(path_cmd,cmd);
+		if(access(path_cmd, X_OK | F_OK) == 0)
+			return (path_cmd);
+		i++;
+	}
+	return (0);
+}	
 int execute_cmd(char **env , char *argv )
 {
 	char **cmd_cut;
+	char *path;
 	cmd_cut = ft_split(argv,' ');
-	if(access(,X_OK))
-		if(execve("/bin/ls",cmd_cut,env))
-			return (0);
+	path = ft_get_pathname(env,cmd_cut[0]);
+	printf("%d",execve(path,cmd_cut,NULL));
 	return (0);
 }
 void child_proc(char **env , int argc ,char **argv,int pipe_fds[2])
