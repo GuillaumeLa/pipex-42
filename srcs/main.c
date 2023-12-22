@@ -24,9 +24,7 @@ char *ft_get_pathname(char **env,char *cmd)
 	while(env[i])
 	{
 		if(ft_strnstr(env[i],"PATH=",5))
-		{
 			break;
-		}
 		i++;
 	}
 	split_path = ft_split(env[i],':');
