@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+#include "../libft/libft.h"
 
 char *ft_get_pathname(char **env,char *cmd)
 {
